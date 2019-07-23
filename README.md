@@ -35,7 +35,7 @@ zone.createA('awesome', '1.2.3.4', 300)
 - `.createCNAME("subDomain", "targetDomain", ttl)` - Return a promise that resolves to the submitted change request.
 
 ```javascript
-zone.createA('alsoawesome', 'awesome.example.com', 300)
+zone.createCNAME('alsoawesome', 'awesome.example.com', 300)
 .then(result => console.log(result))
 .catch(err => throw new Error(err))
 ```
@@ -52,5 +52,5 @@ zone.getRecords()
 
 
 ## Changelog
-- **v0.0.2-3 -** Code and docu spruce up
+- **v0.0.2-4 -** Code and docu spruce up
 - **v0.0.1 -** Initial
