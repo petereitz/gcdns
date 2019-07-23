@@ -24,7 +24,7 @@ zone.getRecords()
 
 ## Creating Records
 
-- `createA("subDomain", "targetIP", ttl)` - returns a promise containing submitted change request.
+- `.createA("subDomain", "targetIP", ttl)` - Return a promise that resolves to the submitted change request.
 
 ```javascript
 zone.createA('awesome', '1.2.3.4', 300)
@@ -32,7 +32,7 @@ zone.createA('awesome', '1.2.3.4', 300)
 .catch(err => throw new Error(err))
 ```
 
-- `createCNAME("subDomain", "targetDomain", ttl)` - returns a promise containing submitted change request.
+- `.createCNAME("subDomain", "targetDomain", ttl)` - Return a promise that resolves to the submitted change request.
 
 ```javascript
 zone.createA('alsoawesome', 'awesome.example.com', 300)
@@ -42,7 +42,13 @@ zone.createA('alsoawesome', 'awesome.example.com', 300)
 
 ## Querying Records
 
-- `getRecords()` - return 
+- `.getRecords()` - Return a promise that resolves to an array of all record objects in zone.
+
+```javascript
+zone.getRecords()
+.then(result => console.log(result))
+.catch(err => throw new Error(err));
+``` 
 
 
 ## Changelog
