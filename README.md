@@ -1,2 +1,49 @@
 # gcdns
-Programmatically create name records in Google Cloud DNS. 
+Programmatically work with name records in Google Cloud DNS. 
+
+## Overview
+Given a service account keyfile and zone information, handles OAuth2 negotiation and proxies requests to the API.
+
+## Install
+
+```
+npm -i gcdns
+```
+
+## Use
+
+```javascript
+const ZONE = require('gcdns');
+const zone = new ZONE('/path-to/service-account/keyfile.json', 'example-com', 'example.com');
+
+// pull an entire zone
+zone.getRecords()
+.then(result => console.log(result))
+.catch(err => throw new Error(err))
+```
+
+## Creating Records
+
+- `createA("subDomain", "targetIP", ttl)` - returns a promise containing submitted change request.
+
+```javascript
+zone.createA('awesome', '1.2.3.4', 300)
+.then(result => console.log(result))
+.catch(err => throw new Error(err))
+```
+
+- `createCNAME("subDomain", "targetDomain", ttl)` - returns a promise containing submitted change request.
+
+```javascript
+zone.createA('alsoawesome', 'awesome.example.com', 300)
+.then(result => console.log(result))
+.catch(err => throw new Error(err))
+```
+
+## Querying Records
+
+- `getRecords()` - return 
+
+
+## Changelog
+- **v0.0.1 -** Initial

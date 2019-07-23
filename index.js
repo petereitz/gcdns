@@ -1,7 +1,5 @@
 // ---SETUP---
 // config
-//const config = require('../config.js');
-
 // auth scopes necessary to modify cloud DNS
 let authScopes = 'https://www.googleapis.com/auth/ndev.clouddns.readwrite';
 
@@ -25,15 +23,19 @@ var getNow = function() {
 // Zone
 class Zone {
   constructor(keyfilePath, zone, domain){
-    this.keyfilePath = keyfilePath;
-    const keyfile = require(keyfilePath);
-    this.project = keyfile.project_id;
-    this.zone = zone;
-    this.domain = domain;
-    this.changeURL = `https://www.googleapis.com/dns/v1/projects/${this.project}/managedZones/${this.zone}/changes`
-    this.recordListURL = `https://www.googleapis.com/dns/v1/projects/${this.project}/managedZones/${this.zone}/rrsets`
-    //console.log(this.changeURL);
-  }
+    try{
+      this.keyfilePath = keyfilePath;
+      const keyfile = require(keyfilePath);
+      this.project = keyfile.project_id;
+      this.zone = zone;
+      this.domain = domain;
+      this.changeURL = `https://www.googleapis.com/dns/v1/projects/${this.project}/managedZones/${this.zone}/changes`;
+      this.recordListURL = `https://www.googleapis.com/dns/v1/projects/${this.project}/managedZones/${this.zone}/rrsets`;
+
+    }catch(err){
+      throw new Error(err);
+    }
+}
 
   makeRequest(method, url, change){
     return new Promise((resolve, reject)=>{
@@ -59,17 +61,9 @@ class Zone {
             // make the request
             axios(requestConfig)
               .then(res => {
-                // t
-                //console.log(res);
-                //console.log(change);
-
                 resolve(res.data);
               })
               .catch(err => {
-                // t
-                //console.log(change);
-                //console.log(change.additions);
-
                 reject(err);
               });
           })
@@ -113,8 +107,8 @@ class Zone {
 
         // submit the change
         self.submitChange(change)
-        .then(() => resolve())
-        .catch(err => reject(err))
+        .then(res => resolve(res))
+        .catch(err => reject(err));
 
       }catch(err){
         reject(err);
@@ -126,6 +120,11 @@ class Zone {
     return new Promise((resolve, reject)=>{
       const self = this;
       try {
+        // q&d validation for `data`
+        if (data.slice(-1) != "."){
+          data = `${data}.`
+        }
+
         // prep the change config
         let change = {
           additions: [
@@ -133,13 +132,7 @@ class Zone {
               name: `${name}.${self.domain}.`,
               type: "CNAME",
               ttl: ttl,
-              rrdatas: data.map(item => {
-                if (item.slice(-1) != "."){
-                  return(`${item}.`)
-                }else{
-                  return(item)
-                }
-              })
+              rrdatas: data
             }
           ]
         }
@@ -147,7 +140,7 @@ class Zone {
         // submit the change
         self.submitChange(change)
         .then(res => resolve(res))
-        .catch(err => reject(err))
+        .catch(err => reject(err.response.data))
 
       }catch(err){
         reject(err);
@@ -160,7 +153,9 @@ class Zone {
       const self = this;
       try {
         self.makeRequest('get', this.recordListURL)
-        .then(res => resolve(res))
+        .then(res => {
+            resolve(res.rrsets)
+        })
         .catch(err => reject(err));
       }catch(err){reject(err)};
     });

@@ -1,13 +1,13 @@
 {
   "name": "gcdns",
-  "version": "0.0.0",
-  "description": "Programmatically reate name records in Google Cloud DNS. https://cloud.google.com/dns/docs/quickstart ",
+  "version": "0.0.1",
+  "description": "Programmatically create name records in Google Cloud DNS. https://cloud.google.com/dns/docs/quickstart ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "pete reitz",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",
     "jsonwebtoken": "^8.5.1"
