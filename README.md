@@ -52,4 +52,5 @@ zone.getRecords()
 
 
 ## Changelog
+- **v0.0.2 -** Code and docu spruce up
 - **v0.0.1 -** Initial

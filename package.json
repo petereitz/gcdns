@@ -1,6 +1,6 @@
 {
   "name": "gcdns",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Programmatically create name records in Google Cloud DNS. https://cloud.google.com/dns/docs/quickstart ",
   "main": "index.js",
   "scripts": {
