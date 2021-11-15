@@ -52,5 +52,6 @@ zone.getRecords()
 
 
 ## Changelog
+- **v0.0.5 -** update axios
 - **v0.0.2-4 -** Code and docu spruce up
 - **v0.0.1 -** Initial
