@@ -22,10 +22,13 @@ var getNow = function() {
 // ---PUBLIC ITEMS---
 // Zone
 class Zone {
-  constructor(keyfilePath, zone, domain){
+  constructor(keyfile, zone, domain){
     try{
-      this.keyfilePath = keyfilePath;
-      const keyfile = require(keyfilePath);
+      if (typeof keyfile == "object"){
+        this.keyfile = keyfile;
+      } else {
+        this.keyfile = require(keyfile);
+      }
       this.project = keyfile.project_id;
       this.zone = zone;
       this.domain = domain;
@@ -41,7 +44,7 @@ class Zone {
     return new Promise((resolve, reject)=>{
       const self = this;
       try {
-        const auth = new Auth(authScopes, this.keyfilePath);
+        const auth = new Auth(authScopes, this.keyfile);
 
         // grab an auth token
         auth.getToken()
