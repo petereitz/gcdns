@@ -52,6 +52,12 @@ zone.getRecords()
 
 
 ## Changelog
-- **v0.0.5 -** update axios
-- **v0.0.2-4 -** Code and docu spruce up
-- **v0.0.1 -** Initial
+- **v0.0.6** 
+  - zone constructor and underlying auth constructor now take either a keyfile path or an object containing the same.
+  - update axios to 0.25.0
+- **v0.0.5** 
+  - update axios to 0.24.0
+- **v0.0.2-4** 
+  - code and docu spruce up
+- **v0.0.1**
+  - initial
